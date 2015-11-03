@@ -7,7 +7,7 @@ Function Get-Smartcard
     param ([Parameter(Mandatory=$true)][string]$CommonName)
 
     $ca = Get-CertificationAuthority
-    $certs = ($ca | get-issuedrequest -Property "CommonName", "Request.SubmittedWhen", "Request.CallerName" -filter "CertificateTemplate -eq Smartcard","CommonName -eq $CommonName")
+    $certs = ($ca | get-issuedrequest -Property "CommonName", "Request.SubmittedWhen", "Request.CallerName" -filter "CertificateTemplate -eq Smartcard" | Where-Object {$_.CommonName -like $CommonName})
     
     Write-Output $certs
 }
